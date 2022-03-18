@@ -1,0 +1,74 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+
+<!-- 引入bootstrap相关的样式 -->
+<!-- Bootstrap Core CSS -->
+<link
+	href="${pageContext.request.contextPath }/resource/custom/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<!-- MetisMenu CSS -->
+<link
+	href="${pageContext.request.contextPath }/resource/custom/vendor/metisMenu/metisMenu.min.css"
+	rel="stylesheet">
+
+<!-- Custom CSS -->
+<link
+	href="${pageContext.request.contextPath }/resource/custom/dist/css/sb-admin-2.css"
+	rel="stylesheet">
+
+<!-- Morris Charts CSS -->
+<link
+	href="${pageContext.request.contextPath }/resource/custom/vendor/morrisjs/morris.css"
+	rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link
+	href="${pageContext.request.contextPath }/resource/custom/vendor/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<!-- bootstrapValidator CSS -->
+<link
+	href="${pageContext.request.contextPath }/resource/custom/vendor/bootstrapValidator/css/bootstrapValidator.min.css"
+	rel="stylesheet" type="text/css">
+
+<!-- 引入相关的js文件(JQuery) -->
+<!-- jQuery -->
+<script src="${pageContext.request.contextPath }/resource/custom/vendor/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="${pageContext.request.contextPath }/resource/custom/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="${pageContext.request.contextPath }/resource/custom/vendor/metisMenu/metisMenu.min.js"></script>
+
+<!-- Morris Charts JavaScript -->
+<script src="${pageContext.request.contextPath }/resource/custom/vendor/raphael/raphael.min.js"></script>
+<script src="${pageContext.request.contextPath }/resource/custom/vendor/morrisjs/morris.min.js"></script>
+<script src="${pageContext.request.contextPath }/resource/custom/data/morris-data.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="${pageContext.request.contextPath }/resource/custom/dist/js/sb-admin-2.js"></script>
+
+<!-- 引用日期插件 -->
+<script src="${pageContext.request.contextPath }/resource/My97DatePicker/WdatePicker.js"></script>
+
+<!-- bootstrapValidator JS -->
+<script src="${pageContext.request.contextPath }/resource/custom/vendor/bootstrapValidator/js/bootstrapValidator.min.js"></script>
+
+
+<!-- 引入自定义的js文件 -->
+<%-- <script src="${pageContext.request.contextPath }/resource/custom/address.js"></script>
+ --%>
+<!-- dtree -->
+<%-- <script src="${pageContext.request.contextPath}/resource/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/dtree.css">
+<script src="${pageContext.request.contextPath}/resource/js/dtree.js"></script> --%>

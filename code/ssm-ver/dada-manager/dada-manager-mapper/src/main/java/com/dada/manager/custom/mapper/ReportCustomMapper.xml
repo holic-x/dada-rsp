@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dada.manager.custom.mapper.ReportCustomMapper" >
+
+	<!-- <select id="selectReportClassifyByPage" parameterType="page" resultType="pageData"> -->
+	<select id="selectReportClassifyByPage" parameterType="com.dada.common.utils.Page"
+		resultType="com.dada.common.utils.PageData">	
+		select 
+			rc.classify_id "classifyId",
+			rc.classify_name "classifyName",
+			<!-- rc.parent_id -->
+			parent.classify_name "parentName",
+			rc.classify_descr "classifyDescr",
+			rc.create_time "createTime",
+			rc.modify_time "modifyTime",
+			case when rc.del_tag ='0' THEN '保存状态' else '删除状态' END "delTag",
+			<!-- rc.user_id -->
+			user.user_name "userName",
+			<!-- rc.category_id -->
+			category.category_name "categoryName",
+			<!-- rc.dept_id -->
+			dept.dept_name "deptName"
+
+		from report_classify rc
+		left join user_info user on user.user_id = rc.user_id
+		left join organization_category oc on category.category_id = rc.category_id
+		left join department dept on dept.dept_id = rc.dept_id
+		where 1=1
+		<if test="pageData.categoryId!= null and pageData.categoryId != ''">
+			and rc.category_id = #{pageData.categoryId,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.deptId!= null and pageData.deptId != ''">
+			and rc.deptId = #{pageData.deptId,jdbcType=VARCHAR}
+		</if>
+		and rc.del_tag = '0'
+		order by rc.create_time desc,rc.modify_time desc
+	</select>
+	
+	
+	<delete id="deleteClassifyLink" parameterType="com.dada.dto.ReportClassifyDTO">
+		delete 
+		from report_classify_link rcl
+		where 1=1
+		<if test="categoryId != null and categoryId != ''">
+			and rcl.category_id = #{categoryId,jdbcType=VARCHAR}
+		</if>
+		<if test="deptId != null and deptId != ''">
+			and rcl.deptId = #{deptId,jdbcType=VARCHAR}
+		</if>
+		<if test="classifyId != null and classifyId != ''">
+			and rcl.classifyId = #{classifyId,jdbcType=VARCHAR}
+		</if>
+	</delete>
+	
+	
+	<select id="listLinkList" parameterType="com.dada.common.utils.Page"
+		resultType="com.dada.common.utils.PageData">	
+		select 
+			rcl.link_id "linkId",
+			<!-- rc.classify_id "classifyId", -->
+			rc.classify_name "classifyName",
+			<!-- rcl.report_id -->
+			uf.file_name "reportName",
+			case 
+				when rcl.hide_status ='0' THEN '上报状态' 
+				when rcl.hide_status ='1' THEN '隐藏状态' 
+				else '其他状态' END "hideStatus",
+			<!-- rcl.user_id -->
+			user.user_name "userName",
+			<!-- rcl.category_id -->
+			category.category_name "categoryName",
+			<!-- rcl.dept_id -->
+			dept.dept_name "deptName"
+
+		from report_classify_link rcl
+		left join report_classify rc on rc.classify_id = rcl.classify_id
+		left join ureport_file uf on uf.file_id = rcl.report_id
+		left join user_info user on user.user_id = rcl.user_id
+		left join organization_category category on category.category_id = rcl.category_id
+		left join department dept on dept.dept_id = rcl.dept_id
+		where 1=1
+		<if test="pageData.categoryId != null and pageData.categoryId != ''">
+			and rcl.category_id = #{pageData.categoryId,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.deptId != null and pageData.deptId != ''">
+			and rcl.dept_id= #{pageData.deptId,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.classifyId != null and pageData.classifyId != ''">
+			and rcl.classify_id = #{pageData.classifyId,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.hideStatus != null and pageData.hideStatus != ''">
+			and rcl.hide_status = #{pageData.hideStatus,jdbcType=VARCHAR}
+		</if>
+	</select>
+</mapper>

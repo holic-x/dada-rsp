@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    ">
+	<import resource="classpath:ureport-console-context.xml" />
+
+	<!-- 加载ureport相关的配置文件 -->
+	<!-- 
+		测试加载方式1:必须指定一个props文件 
+		<bean id="propertyConfigurer" parent="ureport.props"> 
+			此种方式只能添加指定一个文件 
+			<property name="location"> 
+				<value>/WEB-INF/config.properties</value>(需要在指定的WEB-INF下创建相应的文件目录) 
+				<value>classpath:ureport/*.properties</value>(此路径无效,需要制定某个properties文件) 
+			</property> 
+		</bean> 
+		测试加载方式2: (该种方式指定文件无法访问到,虽然不报错,但无法将参数指定给相应的属性) 
+		<context:property-placeholder location="classpath:ureport/*.properties" ignore-unresolvable="true" order="1"/> -->
+	<bean id="propertyConfigurer" parent="ureport.props">
+		<property name="location">
+			<value>classpath:ureport/ureport-custom.properties</value>
+		</property>
+	</bean>
+
+
+	<!-- **************************************************************************************************************** -->
+
+	<!-- 数据源配置：springbean配置、内置数据源配置 -->
+
+	<!-- 方式1：配置SpringBean属性 -->
+	<!-- bean id="属性id" class="指定包名.类名" -->
+	<bean id="testBean" class="com.dada.report.datasource.TestBean"></bean>
+
+	<!-- 方式2/实现1：配置内置数据源信息(借助JDBCUtils获取数据连接) -->
+	<bean id="testDataSource" class="com.dada.report.datasource.TestDataSource"></bean>
+
+	<!-- 方式2/实现2：配置内置数据源信息(通过xml配置文件的方式获取数据连接) -->
+	<!-- 使用druid数据库连接池 -->
+	<bean id="backupDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/dada-report-backup"></property>
+		<property name="username" value="root"></property>
+		<!-- <property name="password" value="root"></property> -->
+		<property name="password" value="123456"></property>
+	</bean>
+	<bean id="testBackupDataSource" class="com.dada.report.datasource.TestBackupDataSource"></bean>
+
+	<!-- 方式2/实现3：配置内置数据源信息(获取机构用户首选数据源配置) -->
+	<bean id="customDataSource" class="com.dada.report.datasource.CustomDataSource"></bean>
+
+	<!-- 方式2/实现4：配置内置数据源信息(获取机构用户备用数据源配置) -->
+	<bean id="customBackupDataSource" class="com.dada.report.datasource.CustomBackupDataSource"></bean>
+
+	<!-- **************************************************************************************************************** -->
+
+	<!-- 配置拦截器(待定) -->
+
+
+
+	<!-- **************************************************************************************************************** -->
+
+	<!-- 配置报表存储器（分别存储报表文件、数据源配置文件，提供机构适用、平台备用两种） -->
+
+	<!-- 配置自定义报表存储器(机构适用) -->
+	<bean id="customProvider" class="com.dada.report.provider.CustomProvider"></bean>
+
+	<!-- 配置自定义报表存储器(平台备用) -->
+	<bean id="backupProvider" class="com.dada.report.provider.BackupProvider"></bean>
+
+	<!-- 配置自定义数据源配置存储器(机构适用) -->
+	<bean id="customDatasourceProvider" class="com.dada.report.provider.CustomDataSourceProvider"></bean>
+
+	<!-- 配置自定义数据源配置存储器(平台备用) -->
+	<bean id="backupDataSourceProvider" class="com.dada.report.provider.BackupDataSourceProvider"></bean>
+
+	<!-- **************************************************************************************************************** -->
+
+
+</beans>

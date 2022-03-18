@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dada.mapper.ReportClassifyLinkMapper" >
+  <resultMap id="BaseResultMap" type="com.dada.pojo.ReportClassifyLink" >
+    <id column="link_id" property="linkId" jdbcType="VARCHAR" />
+    <result column="classify_id" property="classifyId" jdbcType="VARCHAR" />
+    <result column="report_id" property="reportId" jdbcType="VARCHAR" />
+    <result column="hide_status" property="hideStatus" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="VARCHAR" />
+    <result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    link_id, classify_id, report_id, hide_status, user_id, category_id, dept_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dada.pojo.ReportClassifyLinkExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from report_classify_link
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from report_classify_link
+    where link_id = #{linkId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from report_classify_link
+    where link_id = #{linkId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dada.pojo.ReportClassifyLinkExample" >
+    delete from report_classify_link
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dada.pojo.ReportClassifyLink" >
+    insert into report_classify_link (link_id, classify_id, report_id, 
+      hide_status, user_id, category_id, 
+      dept_id)
+    values (#{linkId,jdbcType=VARCHAR}, #{classifyId,jdbcType=VARCHAR}, #{reportId,jdbcType=VARCHAR}, 
+      #{hideStatus,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR}, 
+      #{deptId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dada.pojo.ReportClassifyLink" >
+    insert into report_classify_link
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="linkId != null" >
+        link_id,
+      </if>
+      <if test="classifyId != null" >
+        classify_id,
+      </if>
+      <if test="reportId != null" >
+        report_id,
+      </if>
+      <if test="hideStatus != null" >
+        hide_status,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="linkId != null" >
+        #{linkId,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyId != null" >
+        #{classifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="reportId != null" >
+        #{reportId,jdbcType=VARCHAR},
+      </if>
+      <if test="hideStatus != null" >
+        #{hideStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dada.pojo.ReportClassifyLinkExample" resultType="java.lang.Integer" >
+    select count(*) from report_classify_link
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update report_classify_link
+    <set >
+      <if test="record.linkId != null" >
+        link_id = #{record.linkId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classifyId != null" >
+        classify_id = #{record.classifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportId != null" >
+        report_id = #{record.reportId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hideStatus != null" >
+        hide_status = #{record.hideStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryId != null" >
+        category_id = #{record.categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptId != null" >
+        dept_id = #{record.deptId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update report_classify_link
+    set link_id = #{record.linkId,jdbcType=VARCHAR},
+      classify_id = #{record.classifyId,jdbcType=VARCHAR},
+      report_id = #{record.reportId,jdbcType=VARCHAR},
+      hide_status = #{record.hideStatus,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      category_id = #{record.categoryId,jdbcType=VARCHAR},
+      dept_id = #{record.deptId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dada.pojo.ReportClassifyLink" >
+    update report_classify_link
+    <set >
+      <if test="classifyId != null" >
+        classify_id = #{classifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="reportId != null" >
+        report_id = #{reportId,jdbcType=VARCHAR},
+      </if>
+      <if test="hideStatus != null" >
+        hide_status = #{hideStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        dept_id = #{deptId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where link_id = #{linkId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dada.pojo.ReportClassifyLink" >
+    update report_classify_link
+    set classify_id = #{classifyId,jdbcType=VARCHAR},
+      report_id = #{reportId,jdbcType=VARCHAR},
+      hide_status = #{hideStatus,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=VARCHAR},
+      dept_id = #{deptId,jdbcType=VARCHAR}
+    where link_id = #{linkId,jdbcType=VARCHAR}
+  </update>
+</mapper>

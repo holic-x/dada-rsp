@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dada.manager.custom.mapper.RoleAuthorityCustomMapper" >
+ 
+ 	<!-- <select id="selectRoleAuthorityByPage" parameterType="page" resultType="pageData"> -->
+	<select id="selectRoleAuthorityByPage" parameterType="com.dada.common.utils.Page"
+		resultType="com.dada.common.utils.PageData">
+		select 
+			rai.role_authority_id "roleAuthorityId",
+			rai.authority_id "authorityId",
+			ai.authority_name "authorityName",
+			ri.role_id "roleId", 
+			ri.role_name "roleName",
+			rai.category_id "categoryId",
+			oc.category_name "categoryName"
+		from role_authority_info rai
+		
+		left join authority_info ai on ai.authority_id = rai.authority_id
+		left join role_info ri on ri.role_id = rai.role_id
+		left join organization_category oc on oc.category_id = rai.category_id
+
+		where 1=1
+		<if test="pageData.roleId!= null and pageData.roleId != ''">
+			and rai.role_id = #{pageData.roleId,jdbcType=VARCHAR}
+		</if>
+	</select>
+ 
+ 
+ 	<select id="selectRoleAuthorityByRoleId" parameterType="java.lang.String" resultType="com.dada.vo.RoleAuthorityVO">
+		select 
+			rai.role_authority_id "roleAuthorityId",
+			rai.authority_id "authorityId",
+			ai.authority_name "authorityName",
+			<!-- ri.role_id "roleId",  -->
+			ri.role_name "roleName",
+			<!-- rai.category_id "categoryId", -->
+			oc.category_name "categoryName"
+		from role_authority_info rai
+		
+		left join authority_info ai on ai.authority_id = rai.authority_id
+		left join role_info ri on ri.role_id = rai.role_id
+		left join organization_category oc on oc.category_id = rai.category_id
+
+		where 1=1
+		<if test="roleId!= null and roleId != ''">
+			and rai.role_id = #{roleId,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+ </mapper>

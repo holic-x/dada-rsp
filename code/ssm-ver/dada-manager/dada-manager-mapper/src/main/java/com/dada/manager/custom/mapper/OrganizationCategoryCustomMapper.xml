@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.dada.manager.custom.mapper.OrganizationCategoryCustomMapper">
+
+	<!-- <select id="selectOrganCategoryByPage" parameterType="page" resultType="pageData"> -->
+	<select id="selectOrganCategoryByPage" parameterType="com.dada.common.utils.Page"
+		resultType="com.dada.common.utils.PageData">	
+		select
+		oc.category_id "categoryId",
+		oc.category_code "categoryCode",
+		oc.category_name "categoryName",
+		oc.category_descr "categoryDescr",
+		case when oc.disable_status='0' THEN '启用' else '禁用' END "disableStatus" ,
+		oc.create_time "createTime",
+		oc.modify_time "modifyTime",
+		case when oc.del_tag ='0' THEN '保存状态' else '删除状态' END "delTag" 
+		
+		from organization_category oc
+		where 1=1
+		<if test="pageData.categoryCode != null and pageData.categoryCode != ''">
+			and oc.category_code =
+			#{pageData.categoryCode,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.categoryName != null and pageData.categoryName != ''">
+			and oc.category_name =
+			#{pageData.categoryName,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.disableStatus != null and pageData.disableStatus != ''">
+			and oc.disable_status =
+			#{pageData.disableStatus,jdbcType=VARCHAR}
+		</if>
+		and oc.del_tag = '0'
+		order by oc.create_time desc,oc.modify_time desc
+	</select>
+</mapper>

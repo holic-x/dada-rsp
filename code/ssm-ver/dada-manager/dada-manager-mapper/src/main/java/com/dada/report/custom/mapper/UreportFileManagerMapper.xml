@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+	
+<mapper namespace="com.dada.report.custom.mapper.UreportFileManagerMapper"> 
+ 
+	<resultMap type="com.dada.report.pojo.UreportFileManager" id="ureportFileManager">
+		<id column="file_id" jdbcType="VARCHAR" property="fileId"/>
+		<result column="file_name" jdbcType="VARCHAR" property="fileName"/>
+		<result column="file_content" jdbcType="LONGVARBINARY" property="fileContent"/>
+<!-- 		<result column="file_content" jdbcType="BLOB" property="content"/> -->
+		<result column="category_id" jdbcType="VARCHAR" property="categoryId"/>
+		<result column="dept_id" jdbcType="VARCHAR" property="deptId"/>
+		<result column="file_descr" jdbcType="VARCHAR" property="fileDescr"/>
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+		<result column="public_state" jdbcType="VARCHAR" property="publicState"/>
+		<result column="visible_state" jdbcType="VARCHAR" property="visibleState"/>
+	</resultMap>
+ 
+	<select id="checkExistByName" parameterType="com.dada.report.dto.UreportFileSearchParam" resultType="java.lang.Integer">
+		select count(*) from ${tableName} 
+		where 1=1
+		  <if test="fileName != null" >
+	        and file_name = #{fileName,jdbcType=VARCHAR}
+	      </if>
+	      <if test="categoryId != null" >
+	        and category_id = #{categoryId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="deptId != null" >
+	        and dept_id = #{deptId,jdbcType=VARCHAR}
+	      </if>
+	</select>
+	
+	<select id="queryReportFileList" parameterType="com.dada.report.dto.UreportFileSearchParam" resultMap="ureportFileManager">
+		select * from ${tableName} 
+		where 1=1
+		  <if test="fileName != null" >
+	        and file_name = #{fileName,jdbcType=VARCHAR}
+	      </if>
+	      <if test="categoryId != null" >
+	        and category_id = #{categoryId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="deptId != null" >
+	        and dept_id = #{deptId,jdbcType=VARCHAR}
+	      </if>
+	</select>
+	
+	<select id="queryUreportFileByName" parameterType="com.dada.report.dto.UreportFileSearchParam" resultMap="ureportFileManager">
+		select * from ${tableName}
+		where 1=1
+		  <if test="fileName != null" >
+	        and file_name = #{fileName,jdbcType=VARCHAR}
+	      </if>
+	      <if test="categoryId != null" >
+	        and category_id = #{categoryId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="deptId != null" >
+	        and dept_id = #{deptId,jdbcType=VARCHAR}
+	      </if>
+	</select>
+ 
+	<delete id="deleteReportFileByName" parameterType="com.dada.report.dto.UreportFileSearchParam">
+		delete from ${tableName}
+		where 1=1
+		  <if test="fileName != null" >
+	        and file_name = #{fileName,jdbcType=VARCHAR}
+	      </if>
+	      <if test="categoryId != null" >
+	        and category_id = #{categoryId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="deptId != null" >
+	        and dept_id = #{deptId,jdbcType=VARCHAR}
+	      </if>
+	</delete>
+ 
+	<insert id="insertReportFile" parameterType="com.dada.report.dto.UreportFileSearchParam">
+		insert into ${tableName}(file_id, file_name, category_id,dept_id, file_descr, create_time, modify_time, public_state,visible_state, file_content)
+    	values (#{ureportFileManager.fileId,jdbcType=VARCHAR}, #{ureportFileManager.fileName,jdbcType=VARCHAR}, 
+    			#{ureportFileManager.categoryId,jdbcType=VARCHAR}, #{ureportFileManager.deptId,jdbcType=VARCHAR}, 
+    			#{ureportFileManager.fileDescr,jdbcType=VARCHAR},
+    			#{ureportFileManager.createTime,jdbcType=TIMESTAMP}, #{ureportFileManager.modifyTime,jdbcType=TIMESTAMP}, 
+    			#{ureportFileManager.publicState,jdbcType=VARCHAR}, #{ureportFileManager.visibleState,jdbcType=VARCHAR}, 
+    			#{ureportFileManager.fileContent,jdbcType=LONGVARBINARY}
+      			)
+	</insert>
+ 
+	<update id="updateReportFile" parameterType="com.dada.pojo.UreportFile">
+		update ${tableName}
+	    <set>
+	      <if test="ureportFileManager.fileName != null" >
+	        file_name = #{ureportFileManager.fileName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="ureportFileManager.categoryId != null" >
+	        category_id = #{ureportFileManager.categoryId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="ureportFileManager.deptId != null" >
+	        dept_id = #{ureportFileManager.deptId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="ureportFileManager.fileDescr != null" >
+	        file_descr = #{ureportFileManager.fileDescr,jdbcType=VARCHAR},
+	      </if>
+	      <if test="ureportFileManager.createTime != null" >
+	        create_time = #{ureportFileManager.createTime,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="ureportFileManager.modifyTime != null" >
+	        modify_time = #{ureportFileManager.modifyTime,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="ureportFileManager.publicState != null" >
+	        public_state = #{ureportFileManager.publicState,jdbcType=VARCHAR},
+	      </if>
+	      <if test="ureportFileManager.visibleState != null" >
+	        visible_state = #{ureportFileManager.visibleState,jdbcType=VARCHAR},
+	      </if>
+	      <if test="ureportFileManager.fileContent != null" >
+	        file_content = #{ureportFileManager.fileContent,jdbcType=LONGVARBINARY},
+	      </if>
+	    </set>
+	    where file_id = #{ureportFileManager.fileId,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="listUreportFileByPage" parameterType="com.dada.common.utils.Page"
+		resultType="com.dada.common.utils.PageData">
+	<!-- <select id="listUreportFileByPage" parameterType="page" resultType="pageData"> -->
+		select
+		file.file_id "fileId",
+		file.file_name "fileName",
+		file.file_content "fileContent",
+		<!-- file.category_id "categoryId", -->
+		oc.category_name "categoryName",
+		<!-- file.dept_id "deptId", -->
+		dept.dept_name "deptName",
+		file.file_descr "fileDescr",
+		file.create_time "createTime",
+		file.modify_time "modifyTime",
+		case 
+			when file.public_state ='0' then '开发中' 
+			when file.public_state ='1' then '已完结' 
+			else '其他状态' 
+		END "publicState" ,
+		case 
+			when file.visible_state ='0' then '对外隐藏' 
+			when file.visible_state ='1' then '对外可见' 
+			else '其他状态' END "visibleState"
+		from ${pageData.tableName} file
+		left join organization_category oc on oc.category_id = file.category_id
+		left join department dept on dept.dept_id = file.dept_id
+		where 1=1
+		<if test="pageData.fileName != null and pageData.fileName != ''">
+			and file.file_name = #{pageData.fileName,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.categoryId != null and pageData.categoryId != ''">
+			and file.category_id = #{pageData.categoryId,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.deptId != null and pageData.deptId != ''">
+			and file.dept_id = #{pageData.deptId,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.publicState != null and pageData.publicState != ''">
+			and file.public_state = #{pageData.publicState,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.visibleState != null and pageData.visibleState != ''">
+			and file.visible_state = #{pageData.visibleState,jdbcType=VARCHAR}
+		</if>
+		order by file.create_time desc, file.modify_time desc
+	</select>
+ 
+	 <delete id="deleteUreportFileById" parameterType="com.dada.report.dto.UreportFileSearchParam">
+		delete from ${tableName}
+		where file_id = #{fileId,jdbcType=VARCHAR}
+	</delete>
+ 
+ 
+	<select id="getUreportFileById" parameterType="com.dada.report.dto.UreportFileSearchParam" resultMap="ureportFileManager">
+		select * from ${tableName}
+		where file_id = #{fileId,jdbcType=VARCHAR}
+	</select>
+ 
+ 	<select id="listReportFileByNoClassify" parameterType="com.dada.report.dto.UreportFileSearchParam" resultMap="ureportFileManager">
+		select 
+		file.file_id "fileId" , 
+		file.file_name "fileName" ,
+		<!-- file.file_content "fileContent" , -->
+		file.category_id "categoryId" ,
+		file.dept_id "deptId" ,
+		file.file_descr "fileDescr" ,
+		file.create_time "createTime" ,
+		file.modify_time "modifyTime" ,
+		file.public_state "publicState" ,
+		file.visible_state "visibleState"
+		
+		from ${tableName} file
+		where 1=1
+		  <if test="fileName != null" >
+	        and file.file_name = #{fileName,jdbcType=VARCHAR}
+	      </if>
+	      <if test="categoryId != null" >
+	        and file.category_id = #{categoryId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="deptId != null" >
+	        and file.dept_id = #{deptId,jdbcType=VARCHAR}
+	      </if>
+	      <!-- 指定未进行分类的数据 -->
+	      	and file.file_id not in (
+	      		select link.report_id
+	      		from report_classify_link link
+	      		where 1=1
+	      		<if test="categoryId != null" >
+		        	and link.category_id = #{categoryId,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="deptId != null" >
+		       	 	and link.dept_id = #{deptId,jdbcType=VARCHAR}
+		      	</if>
+	      	)
+	</select>
+</mapper>
+

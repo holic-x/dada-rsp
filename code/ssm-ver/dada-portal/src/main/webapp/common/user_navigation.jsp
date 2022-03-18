@@ -1,0 +1,276 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
+<!DOCTYPE>
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-static-top" role="navigation"
+	style="margin-bottom: 0">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse"
+			data-target=".navbar-collapse">
+			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
+			<span class="icon-bar"></span> <span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="index.html">哒哒报表服务平台</a>
+	</div>
+	<!-- /.navbar-header -->
+	<ul class="nav navbar-top-links navbar-right">
+		<!-- 消息记录 -->
+		<li class="dropdown"><a class="dropdown-toggle"
+			data-toggle="dropdown" href="#"> <i class="fa fa-envelope fa-fw"></i>
+				<i class="fa fa-caret-down"></i>
+		</a>
+			<ul class="dropdown-menu dropdown-messages">
+				<li><a href="#">
+						<div>
+							<strong>John Smith</strong> <span class="pull-right text-muted">
+								<em>Yesterday</em>
+							</span>
+						</div>
+						<div>Lorem ipsum dolor sit amet, consectetur adipiscing
+							elit. Pellentesque eleifend...</div>
+				</a></li>
+				<li class="divider"></li>
+				<li><a href="#">
+						<div>
+							<strong>John Smith</strong> <span class="pull-right text-muted">
+								<em>Yesterday</em>
+							</span>
+						</div>
+						<div>Lorem ipsum dolor sit amet, consectetur adipiscing
+							elit. Pellentesque eleifend...</div>
+				</a></li>
+				<li class="divider"></li>
+				<li><a href="#">
+						<div>
+							<strong>John Smith</strong> <span class="pull-right text-muted">
+								<em>Yesterday</em>
+							</span>
+						</div>
+						<div>Lorem ipsum dolor sit amet, consectetur adipiscing
+							elit. Pellentesque eleifend...</div>
+				</a></li>
+				<li class="divider"></li>
+				<li><a class="text-center" href="#"> <strong>Read
+							All Messages</strong> <i class="fa fa-angle-right"></i>
+				</a></li>
+			</ul> <!-- /.dropdown-messages --></li>
+		<!-- /.dropdown -->
+
+		<!-- 任务进度 -->
+		<li class="dropdown"><a class="dropdown-toggle"
+			data-toggle="dropdown" href="#"> <i class="fa fa-tasks fa-fw"></i>
+				<i class="fa fa-caret-down"></i>
+		</a>
+			<ul class="dropdown-menu dropdown-tasks">
+				<li><a href="#">
+						<div>
+							<p>
+								<strong>Task 1</strong> <span class="pull-right text-muted">40%
+									Complete</span>
+							</p>
+							<div class="progress progress-striped active">
+								<div class="progress-bar progress-bar-success"
+									role="progressbar" aria-valuenow="40" aria-valuemin="0"
+									aria-valuemax="100" style="width: 40%">
+									<span class="sr-only">40% Complete (success)</span>
+								</div>
+							</div>
+						</div>
+				</a></li>
+				<li class="divider"></li>
+				<li><a href="#">
+						<div>
+							<p>
+								<strong>Task 2</strong> <span class="pull-right text-muted">20%
+									Complete</span>
+							</p>
+							<div class="progress progress-striped active">
+								<div class="progress-bar progress-bar-info" role="progressbar"
+									aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+									style="width: 20%">
+									<span class="sr-only">20% Complete</span>
+								</div>
+							</div>
+						</div>
+				</a></li>
+				<li class="divider"></li>
+				<li><a href="#">
+						<div>
+							<p>
+								<strong>Task 3</strong> <span class="pull-right text-muted">60%
+									Complete</span>
+							</p>
+							<div class="progress progress-striped active">
+								<div class="progress-bar progress-bar-warning"
+									role="progressbar" aria-valuenow="60" aria-valuemin="0"
+									aria-valuemax="100" style="width: 60%">
+									<span class="sr-only">60% Complete (warning)</span>
+								</div>
+							</div>
+						</div>
+				</a></li>
+				<li class="divider"></li>
+				<li><a href="#">
+						<div>
+							<p>
+								<strong>Task 4</strong> <span class="pull-right text-muted">80%
+									Complete</span>
+							</p>
+							<div class="progress progress-striped active">
+								<div class="progress-bar progress-bar-danger" role="progressbar"
+									aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"
+									style="width: 80%">
+									<span class="sr-only">80% Complete (danger)</span>
+								</div>
+							</div>
+						</div>
+				</a></li>
+				<li class="divider"></li>
+				<li><a class="text-center" href="#"> <strong>See
+							All Tasks</strong> <i class="fa fa-angle-right"></i>
+				</a></li>
+			</ul> <!-- /.dropdown-tasks --></li>
+		<!-- /.dropdown -->
+
+		<!-- 弹框提醒 -->
+		<li class="dropdown"><a class="dropdown-toggle"
+			data-toggle="dropdown" href="#"> <i class="fa fa-bell fa-fw"></i>
+				<i class="fa fa-caret-down"></i>
+		</a>
+			<ul class="dropdown-menu dropdown-alerts">
+				<li><a href="#">
+						<div>
+							<i class="fa fa-comment fa-fw"></i> New Comment <span
+								class="pull-right text-muted small">4 minutes ago</span>
+						</div>
+				</a></li>
+				<li class="divider"></li>
+				<li><a href="#">
+						<div>
+							<i class="fa fa-twitter fa-fw"></i> 3 New Followers <span
+								class="pull-right text-muted small">12 minutes ago</span>
+						</div>
+				</a></li>
+				<li class="divider"></li>
+				<li><a href="#">
+						<div>
+							<i class="fa fa-envelope fa-fw"></i> Message Sent <span
+								class="pull-right text-muted small">4 minutes ago</span>
+						</div>
+				</a></li>
+				<li class="divider"></li>
+				<li><a href="#">
+						<div>
+							<i class="fa fa-tasks fa-fw"></i> New Task <span
+								class="pull-right text-muted small">4 minutes ago</span>
+						</div>
+				</a></li>
+				<li class="divider"></li>
+				<li><a href="#">
+						<div>
+							<i class="fa fa-upload fa-fw"></i> Server Rebooted <span
+								class="pull-right text-muted small">4 minutes ago</span>
+						</div>
+				</a></li>
+				<li class="divider"></li>
+				<li><a class="text-center" href="#"> <strong>See
+							All Alerts</strong> <i class="fa fa-angle-right"></i>
+				</a></li>
+			</ul> <!-- /.dropdown-alerts --></li>
+		<!-- /.dropdown -->
+
+		<!-- 个人中心 -->
+		<li class="dropdown"><a class="dropdown-toggle"
+			data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
+				<i class="fa fa-caret-down"></i>
+		</a>
+			<ul class="dropdown-menu dropdown-user">
+				<li><a href="#"><i class="fa fa-user fa-fw"></i>用户资料</a></li>
+				<li><a href="#"><i class="fa fa-gear fa-fw"></i> 基本设置</a></li>
+				<li class="divider"></li>
+				<li><a
+					href="${pageContext.request.contextPath }/manager/user/logout.action"><i
+						class="fa fa-sign-out fa-fw"></i> 登录注销</a></li>
+			</ul> <!-- /.dropdown-user --></li>
+		<!-- /.dropdown -->
+	</ul>
+
+	<!-- 脚注 -->
+	<!-- /.navbar-top-links -->
+	<!-- <div class="chs">
+		Collect from <a href="http://www.cssmoban.com/">网页模板</a>
+	</div> -->
+
+	<div class="navbar-default sidebar" role="navigation">
+		<div class="sidebar-nav navbar-collapse">
+			<ul class="nav" id="side-menu">
+				<!-- 查找框 -->
+				<li class="sidebar-search">
+					<div class="input-group custom-search-form">
+						<input type="text" class="form-control" placeholder="Search...">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button">
+								<i class="fa fa-search"></i>
+							</button>
+						</span>
+					</div> <!-- /input-group -->
+				</li>
+
+				<!-- 首页展示 -->
+				<li><a href="index.html"><i class="fa fa-dashboard fa-fw"></i>
+						平台首页</a></li>
+
+				<!-- 平台案例： -->
+				<li><a href="#"><i class="fa fa-wrench fa-fw"></i>平台案例 <span
+						class="fa arrow"></span></a>
+					<ul class="nav nav-second-level">
+						<li><a href="${pageContext.request.contextPath }/manager/page/other?url=">示例1</a></li>
+						<li><a href="${pageContext.request.contextPath }/manager/page/other?url=">示例2</a></li>
+						<li><a href="${pageContext.request.contextPath }/manager/page/other?url=">示例3</a></li>
+					</ul> <!-- /.nav-second-level --></li>  
+
+				<!-- 机构信息维护：机构信息、用户管理 -->
+				<%-- <li><a href="#"><i class="fa fa-edit fa-fw"></i>机构信息维护<span
+						class="fa arrow"></span></a>
+					<ul class="nav nav-second-level">
+						<li><a href="${pageContext.request.contextPath }/manager/page/other?url=">机构分类管理</a></li>
+						<li><a href="${pageContext.request.contextPath }/manager/page/other?url=">机构用户管理</a></li>
+					</ul> <!-- /.nav-second-level --></li> --%>
+
+				<!-- 模板管理：模板信息、模板审核 -->
+				<li><a href="#"><i class="fa fa-sitemap fa-fw"></i>模板管理<span
+						class="fa arrow"></span></a>
+					<ul class="nav nav-second-level">
+						<li><a href="${pageContext.request.contextPath }/manager/page/other?url=">模板信息</a></li>
+						<li><a href="${pageContext.request.contextPath }/manager/page/other?url=">模板上传</a></li>
+					</ul> <!-- /.nav-second-level --></li>
+					
+					
+					<!-- 数据源管理：数据源 -->
+					<!-- <li>
+                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> 数据源管理</a>
+                    </li> -->
+					
+					<%-- 
+					<li><a href="#"><i class="fa fa-files-o fa-fw"></i>数据源管理<span
+						class="fa arrow"></span></a>
+					<ul class="nav nav-second-level">
+						<li><a href="${pageContext.request.contextPath }/manager/page/other?url=">数据源</a></li>
+					</ul> <!-- /.nav-second-level --></li> --%>
+
+
+
+				<!-- 消息管理：消息记录、消息推送 -->
+				<li><a href="#"><i class="fa fa-files-o fa-fw"></i>消息管理<span
+						class="fa arrow"></span></a>
+					<ul class="nav nav-second-level">
+						<li><a href="${pageContext.request.contextPath }/manager/page/other?url=">消息记录</a></li>
+						<%-- <li><a href="${pageContext.request.contextPath }/manager/page/other?url=message/message_remote">消息推送</a></li> --%>
+					</ul> <!-- /.nav-second-level --></li>
+			</ul>
+		</div>
+		<!-- /.sidebar-collapse -->
+	</div>
+	<!-- /.navbar-static-side -->
+</nav>

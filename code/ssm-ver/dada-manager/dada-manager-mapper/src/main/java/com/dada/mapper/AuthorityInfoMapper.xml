@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dada.mapper.AuthorityInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.dada.pojo.AuthorityInfo" >
+    <id column="authority_id" property="authorityId" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="authority_code" property="authorityCode" jdbcType="VARCHAR" />
+    <result column="authority_name" property="authorityName" jdbcType="VARCHAR" />
+    <result column="authority_icon" property="authorityIcon" jdbcType="VARCHAR" />
+    <result column="authority_url" property="authorityUrl" jdbcType="VARCHAR" />
+    <result column="isLeaf" property="isleaf" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.dada.pojo.AuthorityInfo" extends="BaseResultMap" >
+    <result column="authority_descr" property="authorityDescr" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    authority_id, parent_id, authority_code, authority_name, authority_icon, authority_url, 
+    isLeaf, del_flag, create_time, modify_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    authority_descr
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.dada.pojo.AuthorityInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from authority_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dada.pojo.AuthorityInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from authority_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from authority_info
+    where authority_id = #{authorityId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from authority_info
+    where authority_id = #{authorityId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dada.pojo.AuthorityInfoExample" >
+    delete from authority_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dada.pojo.AuthorityInfo" >
+    insert into authority_info (authority_id, parent_id, authority_code, 
+      authority_name, authority_icon, authority_url, 
+      isLeaf, del_flag, create_time, 
+      modify_time, authority_descr)
+    values (#{authorityId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{authorityCode,jdbcType=VARCHAR}, 
+      #{authorityName,jdbcType=VARCHAR}, #{authorityIcon,jdbcType=VARCHAR}, #{authorityUrl,jdbcType=VARCHAR}, 
+      #{isleaf,jdbcType=VARCHAR}, #{delFlag,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{authorityDescr,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dada.pojo.AuthorityInfo" >
+    insert into authority_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="authorityId != null" >
+        authority_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="authorityCode != null" >
+        authority_code,
+      </if>
+      <if test="authorityName != null" >
+        authority_name,
+      </if>
+      <if test="authorityIcon != null" >
+        authority_icon,
+      </if>
+      <if test="authorityUrl != null" >
+        authority_url,
+      </if>
+      <if test="isleaf != null" >
+        isLeaf,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="authorityDescr != null" >
+        authority_descr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="authorityId != null" >
+        #{authorityId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityCode != null" >
+        #{authorityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityName != null" >
+        #{authorityName,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityIcon != null" >
+        #{authorityIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityUrl != null" >
+        #{authorityUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isleaf != null" >
+        #{isleaf,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authorityDescr != null" >
+        #{authorityDescr,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dada.pojo.AuthorityInfoExample" resultType="java.lang.Integer" >
+    select count(*) from authority_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update authority_info
+    <set >
+      <if test="record.authorityId != null" >
+        authority_id = #{record.authorityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorityCode != null" >
+        authority_code = #{record.authorityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorityName != null" >
+        authority_name = #{record.authorityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorityIcon != null" >
+        authority_icon = #{record.authorityIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorityUrl != null" >
+        authority_url = #{record.authorityUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isleaf != null" >
+        isLeaf = #{record.isleaf,jdbcType=VARCHAR},
+      </if>
+      <if test="record.delFlag != null" >
+        del_flag = #{record.delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyTime != null" >
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.authorityDescr != null" >
+        authority_descr = #{record.authorityDescr,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update authority_info
+    set authority_id = #{record.authorityId,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=VARCHAR},
+      authority_code = #{record.authorityCode,jdbcType=VARCHAR},
+      authority_name = #{record.authorityName,jdbcType=VARCHAR},
+      authority_icon = #{record.authorityIcon,jdbcType=VARCHAR},
+      authority_url = #{record.authorityUrl,jdbcType=VARCHAR},
+      isLeaf = #{record.isleaf,jdbcType=VARCHAR},
+      del_flag = #{record.delFlag,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      authority_descr = #{record.authorityDescr,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update authority_info
+    set authority_id = #{record.authorityId,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=VARCHAR},
+      authority_code = #{record.authorityCode,jdbcType=VARCHAR},
+      authority_name = #{record.authorityName,jdbcType=VARCHAR},
+      authority_icon = #{record.authorityIcon,jdbcType=VARCHAR},
+      authority_url = #{record.authorityUrl,jdbcType=VARCHAR},
+      isLeaf = #{record.isleaf,jdbcType=VARCHAR},
+      del_flag = #{record.delFlag,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dada.pojo.AuthorityInfo" >
+    update authority_info
+    <set >
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityCode != null" >
+        authority_code = #{authorityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityName != null" >
+        authority_name = #{authorityName,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityIcon != null" >
+        authority_icon = #{authorityIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityUrl != null" >
+        authority_url = #{authorityUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isleaf != null" >
+        isLeaf = #{isleaf,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authorityDescr != null" >
+        authority_descr = #{authorityDescr,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where authority_id = #{authorityId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dada.pojo.AuthorityInfo" >
+    update authority_info
+    set parent_id = #{parentId,jdbcType=VARCHAR},
+      authority_code = #{authorityCode,jdbcType=VARCHAR},
+      authority_name = #{authorityName,jdbcType=VARCHAR},
+      authority_icon = #{authorityIcon,jdbcType=VARCHAR},
+      authority_url = #{authorityUrl,jdbcType=VARCHAR},
+      isLeaf = #{isleaf,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      authority_descr = #{authorityDescr,jdbcType=LONGVARCHAR}
+    where authority_id = #{authorityId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dada.pojo.AuthorityInfo" >
+    update authority_info
+    set parent_id = #{parentId,jdbcType=VARCHAR},
+      authority_code = #{authorityCode,jdbcType=VARCHAR},
+      authority_name = #{authorityName,jdbcType=VARCHAR},
+      authority_icon = #{authorityIcon,jdbcType=VARCHAR},
+      authority_url = #{authorityUrl,jdbcType=VARCHAR},
+      isLeaf = #{isleaf,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where authority_id = #{authorityId,jdbcType=VARCHAR}
+  </update>
+</mapper>

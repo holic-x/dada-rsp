@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dada.manager.custom.mapper.DepartmentCustomMapper" >
+
+	<!-- <select id="selectDepartmentByPage" parameterType="page" resultType="pageData"> -->
+	<select id="selectDepartmentByPage" parameterType="com.dada.common.utils.Page"
+		resultType="com.dada.common.utils.PageData">	
+		select 
+			dept.dept_id "configId", 
+			dept.dept_name "deptName",
+			<!-- ds.parent_id "parentId", -->
+			parent.dept_name "parentName",
+			<!-- ds.category_id "categoryId", -->
+			oc.category_name "categoryName",
+			dept.dept_descr "deptDescr", 
+			dept.create_time "createTime", 
+			dept.modify_time "modifyTime", 
+			case when dept.del_tag ='0' THEN '保存状态' else '删除状态' END "delTag"
+		from department dept
+		left join department parent on dept.parent_id = parent.dept_id
+		left join organization_category oc on oc.category_id = ds.category_id
+
+		where 1=1
+		<if test="pageData.categoryId!= null and pageData.categoryId != ''">
+			and dept.category_id = #{pageData.categoryId,jdbcType=VARCHAR}
+		</if>
+		and dept.del_tag = '0'
+		order by dept.create_time desc,dept.modify_time desc
+	</select>
+</mapper>

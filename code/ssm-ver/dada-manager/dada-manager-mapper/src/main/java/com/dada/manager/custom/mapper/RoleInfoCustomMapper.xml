@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dada.manager.custom.mapper.RoleInfoCustomMapper" >
+
+	<!-- <select id="selectRoleInfoByPage" parameterType="page" resultType="pageData"> -->
+	<select id="selectRoleInfoByPage" parameterType="com.dada.common.utils.Page"
+		resultType="com.dada.common.utils.PageData">	
+		select 
+			ri.role_id "roleId", 
+			ri.role_code "roleCode",
+			ri.role_name "roleName",
+			<!-- ri.category_id "categoryId", -->
+			oc.category_name "categoryName",
+			ri.role_descr "roleDescr", 
+			ri.create_time "createTime", 
+			ri.modify_time "modifyTime", 
+			case when ri.del_flag ='0' THEN '保存状态' else '删除状态' END "delFlag"
+		from role_info ri 
+		left join organization_category oc on oc.category_id = ri.category_id
+
+		where 1=1
+		<if test="pageData.categoryId!= null and pageData.categoryId != ''">
+			and ri.category_id = #{pageData.categoryId,jdbcType=VARCHAR}
+		</if>
+		and ri.del_flag = '0'
+		order by ri.create_time desc,ri.modify_time desc
+	</select>
+</mapper>

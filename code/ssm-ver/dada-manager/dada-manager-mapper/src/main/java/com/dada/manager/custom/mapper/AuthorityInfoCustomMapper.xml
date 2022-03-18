@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dada.manager.custom.mapper.AuthorityInfoCustomMapper">
+
+
+	<!-- <select id="selectAuthorityInfoByPage" parameterType="page" resultType="pageData"> -->
+	<select id="selectAuthorityInfoByPage" parameterType="com.dada.common.utils.Page"
+		resultType="com.dada.common.utils.PageData">
+		select
+		ai.authority_id "authorityId",
+		<!-- ai.parent_id "parentId", -->
+		pai.authority_name "parentAuthorityName",
+		ai.authority_code "authorityCode",
+		ai.authority_name "authorityName",
+		ai.authority_descr "authorityDescr",
+		ai.authority_url "authorityUrl",
+		case when ai.isleaf ='0' then '父节点' else '子节点' END "isleaf" ,
+		case when ai.del_flag='0' then '保存状态' else '删除状态' END "delFlag",
+		ai.create_time "createTime",
+		ai.modify_time "modifyTime"
+
+		from authority_info ai 
+		left join authority_info pai on pai.authority_id = ai.parent_id
+
+		where 1=1
+		<if test="pageData.parentId != null and pageData.parentId != ''">
+			and ai.parent_id = #{pageData.parentId,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.authorityCode != null and pageData.authorityCode != ''">
+			and ai.authority_code =
+			#{pageData.authorityCode,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.authorityName != null and pageData.authorityName != ''">
+			and ai.authority_name like CONCAT(CONCAT('%',
+			trim(#{pageData.authorityName})), '%')
+		</if>
+		<if test="pageData.isleaf != null and pageData.isleaf != ''">
+			and ai.isleaf = #{pageData.isleaf,jdbcType=VARCHAR}
+		</if>
+		and ai.del_flag = '0'
+		order by ai.create_time desc,ai.modify_time desc
+	</select>
+
+</mapper>

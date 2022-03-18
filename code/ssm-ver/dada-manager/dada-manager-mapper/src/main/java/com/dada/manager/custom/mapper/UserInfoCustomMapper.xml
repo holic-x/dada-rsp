@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dada.manager.custom.mapper.UserInfoCustomMapper">
+
+	<!-- 引用com.dada.mapper.UserInfoMapper.xxx(resultMap的Id) -->
+	<!--
+		<select id="selectUserInfoByPage" parameterType="page" resultType="pageData"> 
+	-->
+	<select id="selectUserInfoByPage" parameterType="com.dada.common.utils.Page"
+		resultType="com.dada.common.utils.PageData">
+		<!-- select <include refid="com.dada.mapper.UserInfoMapper.Base_Column_List" 
+			/> , <include refid="com.dada.mapper.UserInfoMapper.Blob_Column_List" /> -->
+		select
+		ui.user_id "userId",
+		<!-- ui.role_id "roleId", -->
+		ri.role_name "roleName",
+		<!-- ui.category_id "categoryId", -->
+		oc.category_name "categoryName",
+		ui.user_name "userName",
+		ui.birthday "birthday",
+		<!-- ui.gender "gender", -->
+		data.data_name "genderContext",
+		ui.address "address",
+		ui.phone "phone",
+		ui.email "email",
+		ui.create_time "createTime",
+		ui.modify_time "modifyTime",
+		case when ui.user_state='0' THEN '启用' else '禁用' END "userState" ,
+		case when ui.user_category='0' THEN '普通用户' else '机构用户' END "userCategory"
+		,
+		ui.login_account "loginAccount",
+		ui.login_password "loginPassword",
+		ui.login_image "loginImage",
+		case when ui.del_tag='0' THEN '保存状态' else '删除状态' END "delTag"
+		<!-- user_descr "userDescr" -->
+		from user_info ui
+		left join role_info ri on ri.role_id = ui.role_id
+		left join
+		organization_category oc on oc.category_id = ui.category_id
+		left join
+		data_dictionary data on data.data_id = ui.gender
+
+		where 1=1
+		<if test="pageData.roleId!= null and pageData.roleId != ''">
+			and ui.role_id = #{pageData.roleId,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.categoryId!= null and pageData.categoryId != ''">
+			and ui.category_id =
+			#{pageData.categoryId,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.deptId!= null and pageData.deptId != ''">
+			and ui.deptId =
+			#{pageData.deptId,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.userName != null and pageData.userName != ''">
+			and ui.user_name like CONCAT(CONCAT('%',
+			trim(#{pageData.userName})), '%')
+		</if>
+		<if test="pageData.phone != null and pageData.phone != ''">
+			and ui.phone like CONCAT(CONCAT('%',
+			trim(#{pageData.phone})), '%')
+		</if>
+		<if test="pageData.email != null and pageData.email != ''">
+			and ui.email like CONCAT(CONCAT('%',
+			trim(#{pageData.email})), '%')
+		</if>
+		<if test="pageData.userState != null and pageData.userState != ''">
+			and ui.user_state =
+			#{pageData.userState,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.userCategory != null and pageData.userCategory != ''">
+			and ui.user_category =
+			#{pageData.userCategory,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.loginAccount != null and pageData.loginAccount != ''">
+			and ui.login_account like CONCAT(CONCAT('%',
+			trim(#{pageData.loginAccount})), '%')
+		</if>
+		and ui.del_tag = '0'
+		order by ui.create_time desc,ui.modify_time desc
+	</select>
+	
+	<!-- 
+	<select id="selectUserInfoByPage" parameterType="page"
+		resultType="pageData">
+		select
+		<include refid="com.dada.mapper.UserInfoMapper.Base_Column_List" />
+		,
+		<include refid="com.dada.mapper.UserInfoMapper.Blob_Column_List" />
+		select
+		user_id "userId", role_id "roleId", category_id "categoryId", user_name
+		"userName",
+		birthday "birthday", gender "gender", address "address", phone "phone", email
+		"email", create_time "createTime", modify_time "modifyTime",
+		user_state "userState",
+		user_category "userCategory", login_account "loginAccount", login_password
+		"loginPassword", login_image "loginImage", del_tag "delTag",user_descr
+		"userDescr"
+		from user_info userInfo where 1=1
+		<if test="pageData.roleId!= null and pageData.roleId 
+		!= ''"> and userInfo.role_id =
+			#{pageData.roleId,jdbcType=VARCHAR} </if>
+		<if test="pageData.categoryId!= null and pageData.categoryId != ''"> and
+			userInfo.category_id = #{pageData.categoryId,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.userName != null and pageData.userName != ''"> and userInfo.user_name
+			like CONCAT(CONCAT('%', trim(#{pageData.userName})), '%') </if>
+		<if test="pageData.phone 
+		!= null and pageData.phone != ''"> and userInfo.phone like CONCAT(CONCAT('%',
+			trim(#{pageData.phone})), '%') </if>
+		<if test="pageData.email != null and 
+		pageData.email != ''"> and userInfo.email like CONCAT(CONCAT('%',
+			trim(#{pageData.email})),
+			'%') </if>
+		<if test="pageData.userState != null and pageData.userState != 
+		''"> and userInfo.user_state =
+			#{pageData.userState,jdbcType=VARCHAR} </if>
+		<if test="pageData.userCategory != null and pageData.userCategory != ''">
+			and userInfo.user_category = #{pageData.userCategory,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.loginAccount != null and pageData.loginAccount != ''">
+			and userInfo.login_account like CONCAT(CONCAT('%',
+			trim(#{pageData.loginAccount})),
+			'%') </if>
+		and userInfo.del_tag = '0' order by create_time desc
+	</select>
+ 	-->
+</mapper>

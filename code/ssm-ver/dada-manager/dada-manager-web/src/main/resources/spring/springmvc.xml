@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- 加载指定的配置文件:实现数据库连接 -->
+	<context:property-placeholder location="classpath:config/*.properties"/> 
+	
+	<!-- 定义扫描包的路径 -->
+	<context:component-scan base-package="com.dada.manager.controller">
+	</context:component-scan>
+
+	<!-- 使用注解适配器 -->
+	<mvc:annotation-driven conversion-service="conversionService" />
+
+	<!-- 自定义参数绑定 -->
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<!-- 定义转换器 -->
+		<property name="converters">
+			<list>
+				<!-- 定义日期转换器 -->
+				<bean class="com.dada.manager.converter.CustomDateConverter"></bean>
+				<!-- 还可定义其他的转换器 -->
+			</list>
+		</property>
+	</bean>
+
+	<!-- 配置视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 配置视图的前缀 -->
+		<property name="prefix" value="/WEB-INF/jsp/admin/"></property>
+		<!-- 配置视图的后缀 -->
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	
+
+	<!-- 配置拦截器 -->
+	<mvc:interceptors>
+		<!-- 可以配置多个拦截器 -->
+		<mvc:interceptor>
+			<!-- 标识拦截所有的url,包括url的子路径 -->
+			<mvc:mapping path="/manager/**" />
+			<bean class="com.dada.manager.interceptor.LoginInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<!-- 配置资源映射(避免访问的静态资源被拦截) -->
+	<!-- 
+	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
+	<mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
+	 -->
+	<mvc:resources location="/WEB-INF/resource/" mapping="/resource/**"/>
+</beans>

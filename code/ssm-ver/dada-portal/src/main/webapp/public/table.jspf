@@ -1,0 +1,90 @@
+<!-- table表格相关文件引入 -->
+<!-- 相关的CSS文件 -->
+<!-- Bootstrap Core CSS -->
+<link
+	href="${pageContext.request.contextPath }/resource/custom/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<!-- MetisMenu CSS -->
+<link
+	href="${pageContext.request.contextPath }/resource/custom/vendor/metisMenu/metisMenu.min.css"
+	rel="stylesheet">
+
+<!-- DataTables CSS -->
+<link
+	href="${pageContext.request.contextPath }/resource/custom/vendor/datatables-plugins/dataTables.bootstrap.css"
+	rel="stylesheet">
+
+<!-- DataTables Responsive CSS -->
+<link
+	href="${pageContext.request.contextPath }/resource/custom/vendor/datatables-responsive/dataTables.responsive.css"
+	rel="stylesheet">
+
+<!-- Custom CSS -->
+<link
+	href="${pageContext.request.contextPath }/resource/custom/dist/css/sb-admin-2.css"
+	rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link
+	href="${pageContext.request.contextPath }/resource/custom/vendor/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+
+<!-- 相关的js文件 -->
+<!-- jQuery -->
+<script
+	src="${pageContext.request.contextPath }/resource/custom/vendor/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script
+	src="${pageContext.request.contextPath }/resource/custom/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script
+	src="${pageContext.request.contextPath }/resource/custom/vendor/metisMenu/metisMenu.min.js"></script>
+
+<!-- DataTables JavaScript -->
+<script
+	src="${pageContext.request.contextPath }/resource/custom/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script
+	src="${pageContext.request.contextPath }/resource/custom/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+<script
+	src="${pageContext.request.contextPath }/resource/custom/vendor/datatables-responsive/dataTables.responsive.js"></script>
+<!-- Custom Theme JavaScript -->
+<script
+	src="${pageContext.request.contextPath }/resource/custom/dist/js/sb-admin-2.js"></script>
+
+
+
+
+
+
+
+<link
+	href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"
+	rel="stylesheet" />
+<link
+	href="https://cdn.datatables.net/buttons/1.5.0/css/buttons.dataTables.min.css"
+	rel="stylesheet" />
+<!-- 
+<script
+	src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+ -->
+<script
+	src="https://cdn.datatables.net/buttons/1.5.0/js/dataTables.buttons.min.js"></script>
+<script
+	src="https://cdn.datatables.net/buttons/1.5.0/js/buttons.colVis.min.js"></script>
+
+
+
+
+
+
+
+<!-- 引入自定义的js文件 -->
+<%-- <script src="${pageContext.request.contextPath }/resource/custom/address.js"></script>
+ --%>
+<!-- dtree -->
+<%-- <script src="${pageContext.request.contextPath}/resource/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/dtree.css">
+<script src="${pageContext.request.contextPath}/resource/js/dtree.js"></script> --%>

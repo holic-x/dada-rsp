@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dada.manager.custom.mapper.DataSourceCustomMapper" >
+
+	<!-- <select id="selectDataSourceByPage" parameterType="page" resultType="pageData"> -->
+	<select id="selectDataSourceByPage" parameterType="com.dada.common.utils.Page"
+		resultType="com.dada.common.utils.PageData">	
+		select 
+			ds.config_id "configId", 
+			ds.config_name "configName", 
+			<!-- ds.user_id "userId", -->
+			user.user_name "userName",
+			<!-- ds.category_id "categoryId", -->
+			oc.category_name "categoryName",
+			ds.config_content "configContent", 
+			ds.create_time "createTime", 
+			ds.modify_time "modifyTime", 
+			<!-- ds.prefer_state "preferState", -->
+			case 
+				when ds.prefer_state ='-1' then '默认普通数据源' 
+				when ds.prefer_state ='1' then '首选数据源' 
+				when ds.prefer_state ='2' then '备选数据源' 
+				else '其余状态' 
+			end "preferState",
+			case when ds.del_tag ='0' THEN '保存状态' else '删除状态' END "delTag"
+		from data_source_info ds
+		left join user_info user on user.user_id = ds.user_id
+		left join organization_category oc on oc.category_id = ds.category_id
+
+		where 1=1
+		<if test="pageData.categoryId!= null and pageData.categoryId != ''">
+			and ds.category_id = #{pageData.categoryId,jdbcType=VARCHAR}
+		</if>
+		and ds.del_tag = '0'
+		order by ds.create_time desc,ds.modify_time desc
+	</select>
+</mapper>

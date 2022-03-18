@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dada.manager.custom.mapper.DataDictionaryCustomMapper">
+	<resultMap id="DataBaseResultMap" type="com.dada.pojo.DataDictionary">
+		<id column="data_id" property="dataId" jdbcType="VARCHAR" />
+		<result column="data_code" property="dataCode" jdbcType="VARCHAR" />
+		<result column="data_name" property="dataName" jdbcType="VARCHAR" />
+		<result column="data_type" property="dataType" jdbcType="VARCHAR" />
+		<result column="data_status" property="dataStatus" jdbcType="VARCHAR" />
+		<result column="isLeaf" property="isleaf" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+		<result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="DataResultMapWithBLOBs" type="com.dada.pojo.DataDictionary"
+		extends="DataBaseResultMap">
+		<result column="data_desc" property="dataDesc" jdbcType="LONGVARCHAR" />
+	</resultMap>
+
+	<sql id="Data_Base_Column_List">
+		data_id, data_code, data_name, data_type, data_status, isLeaf, create_time,
+		modify_time,
+		parent_id
+	</sql>
+	<sql id="Data_Blob_Column_List">
+		data_desc
+	</sql>
+
+	<select id="listLeafByDataCode" resultMap="DataResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		select
+		<include refid="Data_Base_Column_List" />
+		,
+		<include refid="Data_Blob_Column_List" />
+		from data_dictionary
+		where parent_id = (
+			select data_id from data_dictionary where data_code = #{dataCode,jdbcType=VARCHAR}
+		) and data_status = '0';
+	</select>
+	
+	
+	<!-- <select id="selectDataByPage" parameterType="page" resultType="pageData"> -->
+	<select id="selectDataByPage" parameterType="com.dada.common.utils.Page"
+		resultType="com.dada.common.utils.PageData">
+		select
+		data.data_id "dataId",
+		data.data_code "dataCode",
+		data.data_name "dataName",
+		data.data_type "dataType",
+		data.data_desc "dataDesc",
+		case when data.data_status='0' THEN '启用' else '禁用' END "dataStatus" ,
+		case when data.isleaf='0' THEN '父节点' else '子节点' END "isleaf" ,
+		data.create_time "createTime",
+		data.modify_time "modifyTime",
+		<!-- data.parent_id "parentId", -->
+		pdata.data_name "parentName"
+
+		from data_dictionary data
+		left join data_dictionary pdata on pdata.data_id = data.parent_id
+		where 1=1
+		<!-- 
+		<if test="pageData.categoryCode != null and pageData.categoryCode != ''">
+			and oc.category_code =
+			#{pageData.categoryCode,jdbcType=VARCHAR}
+		</if>
+		 -->
+		order by data.create_time desc,data.modify_time desc
+	</select>
+
+</mapper>

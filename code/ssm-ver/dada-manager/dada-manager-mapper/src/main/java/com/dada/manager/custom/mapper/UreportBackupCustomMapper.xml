@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+	
+<mapper namespace="com.dada.manager.custom.mapper.UreportBackupCustomMapper"> 
+ 
+	<resultMap type="com.dada.pojo.UreportBackup" id="ureportBackup">
+		<id column="file_id" jdbcType="VARCHAR" property="fileId"/>
+		<result column="file_name" jdbcType="VARCHAR" property="fileName"/>
+		<result column="file_content" jdbcType="LONGVARBINARY" property="fileContent"/> 
+		<!-- <result column="file_content" jdbcType="BLOB" property="content"/> -->
+		<result column="file_descr" jdbcType="VARCHAR" property="fileDescr"/>
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+		<result column="public_state" jdbcType="VARCHAR" property="publicState"/>
+		<result column="visible_state" jdbcType="VARCHAR" property="visibleState"/>
+	</resultMap>
+ 
+	<select id="checkExistByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(*) from ureport_backup where file_name = #{fileName}
+	</select>
+	
+	<select id="queryReportBackupList" resultMap="ureportBackup">
+		select * from ureport_backup
+	</select>  
+	
+	<select id="queryUreportBackupByName" resultMap="ureportBackup">
+		select * from ureport_backup where file_name = #{fileName} 
+	</select>
+ 
+	<delete id="deleteReportBackupByName" parameterType="java.lang.String">
+		delete from ureport_backup where file_name = #{fileName}
+	</delete>
+ 
+	<insert id="insertReportBackup" parameterType="com.dada.pojo.UreportBackup">
+		insert into ureport_backup (file_id, file_name, file_descr, create_time, modify_time, public_state, visible_state, file_content)
+    	values (#{fileId,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, 
+    			#{fileDescr,jdbcType=VARCHAR},
+    			#{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, 
+    			#{publicState,jdbcType=VARCHAR}, #{visibleState,jdbcType=VARCHAR}, 
+    			#{fileContent,jdbcType=LONGVARBINARY}
+      			)
+	</insert>
+ 
+	<update id="updateReportBackup" parameterType="com.dada.pojo.UreportBackup">
+		update ureport_backup
+	    <set >
+	      <if test="fileName != null" >
+	        file_name = #{fileName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="fileDescr != null" >
+	        file_descr = #{fileDescr,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createTime != null" >
+	        create_time = #{createTime,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="modifyTime != null" >
+	        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="publicState != null" >
+	        public_state = #{publicState,jdbcType=VARCHAR},
+	      </if>
+	      <if test="visibleState != null" >
+	        visible_state = #{visibleState,jdbcType=VARCHAR},
+	      </if>
+	      <if test="fileContent != null" >
+	        file_content = #{fileContent,jdbcType=LONGVARBINARY},
+	      </if>
+	    </set>
+	    where file_id = #{fileId,jdbcType=VARCHAR}
+	</update>
+ 
+</mapper>

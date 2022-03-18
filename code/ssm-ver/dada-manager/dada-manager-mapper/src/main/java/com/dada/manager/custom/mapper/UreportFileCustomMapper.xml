@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+	
+<mapper namespace="com.dada.manager.custom.mapper.UreportFileCustomMapper"> 
+ 
+	<resultMap type="com.dada.pojo.UreportFile" id="ureportFile">
+		<id column="file_id" jdbcType="VARCHAR" property="fileId"/>
+		<result column="file_name" jdbcType="VARCHAR" property="fileName"/>
+		<result column="file_content" jdbcType="LONGVARBINARY" property="fileContent"/>
+<!-- 		<result column="file_content" jdbcType="BLOB" property="content"/> -->
+		<result column="category_id" jdbcType="VARCHAR" property="categoryId"/>
+		<result column="file_descr" jdbcType="VARCHAR" property="fileDescr"/>
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+		<result column="public_state" jdbcType="VARCHAR" property="publicState"/>
+		<result column="visible_state" jdbcType="VARCHAR" property="visibleState"/>
+	</resultMap>
+ 
+	<select id="checkExistByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(*) from ureport_file where file_name = #{fileName} and category_id = #{categoryId} 
+	</select>
+	
+	<select id="queryReportFileList" parameterType="java.lang.String" resultMap="ureportFile">
+		select * from ureport_file where category_id = #{categoryId}
+	</select>
+	
+	<select id="queryUreportFileByName" resultMap="ureportFile">
+		select * from ureport_file where file_name = #{fileName}  and category_id = #{categoryId} 
+	</select>
+ 
+	<delete id="deleteReportFileByName" parameterType="java.lang.String">
+		delete from ureport_file where file_name = #{fileName} and category_id = #{categoryId} 
+	</delete>
+ 
+	<insert id="insertReportFile" parameterType="com.dada.pojo.UreportFile">
+		insert into ureport_file (file_id, file_name, category_id, file_descr, create_time, modify_time, public_state,visible_state, file_content)
+    	values (#{fileId,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, 
+    			#{categoryId,jdbcType=VARCHAR}, #{fileDescr,jdbcType=VARCHAR},
+    			#{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, 
+    			#{publicState,jdbcType=VARCHAR}, #{visibleState,jdbcType=VARCHAR}, 
+    			#{fileContent,jdbcType=LONGVARBINARY}
+      			)
+	</insert>
+ 
+	<update id="updateReportFile" parameterType="com.dada.pojo.UreportFile">
+		update ureport_file
+	    <set >
+	      <if test="fileName != null" >
+	        file_name = #{fileName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="categoryId != null" >
+	        category_id = #{categoryId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="fileDescr != null" >
+	        file_descr = #{fileDescr,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createTime != null" >
+	        create_time = #{createTime,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="modifyTime != null" >
+	        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="publicState != null" >
+	        public_state = #{publicState,jdbcType=VARCHAR},
+	      </if>
+	      <if test="visibleState != null" >
+	        visible_state = #{visibleState,jdbcType=VARCHAR},
+	      </if>
+	      <if test="fileContent != null" >
+	        file_content = #{fileContent,jdbcType=LONGVARBINARY},
+	      </if>
+	    </set>
+	    where file_id = #{fileId,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="listUreportFileByPage" parameterType="com.dada.common.utils.Page"
+		resultType="com.dada.common.utils.PageData">
+	<!-- <select id="listUreportFileByPage" parameterType="page" resultType="pageData"> -->
+		select
+		file.file_id "fileId",
+		file.file_name "fileName",
+		file.file_content "fileContent",
+		<!-- file.category_id "categoryId", -->
+		oc.category_name "categoryName",
+		file.file_descr "fileDescr",
+		file.create_time "createTime",
+		file.modify_time "modifyTime",
+		case 
+			when file.public_state ='0' then '对内私有' 
+			when file.public_state ='1' then '对外公开' 
+			else '其他状态' 
+		END "publicState" ,
+		case 
+			when file.visible_state ='0' then '对外隐藏' 
+			when file.visible_state ='1' then '对外可见' 
+			else '其他状态' END "visibleState"
+		from ureport_file file
+		left join organization_category oc on oc.category_id = file.category_id
+		where 1=1
+		<if test="pageData.fileName != null and pageData.fileName != ''">
+			and file.file_name = #{pageData.fileName,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.categoryId != null and pageData.categoryId != ''">
+			and file.category_id = #{pageData.categoryId,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.publicState != null and pageData.publicState != ''">
+			and file.public_state = #{pageData.publicState,jdbcType=VARCHAR}
+		</if>
+		<if test="pageData.visibleState != null and pageData.visibleState != ''">
+			and file.visible_state = #{pageData.visibleState,jdbcType=VARCHAR}
+		</if>
+		order by file.create_time desc, file.modify_time desc
+	</select>
+ 
+</mapper>
+
